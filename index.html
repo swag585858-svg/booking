@@ -1,262 +1,139 @@
+
 <!DOCTYPE html>
-<!-- saved from url=(0042)file:///C:/Users/user/Downloads/index.html -->
-<html lang="zh-TW"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Swag Walking Bar - 線上訂位系統</title>
-    <link href="file:///C:/Users/user/Downloads/index_files/all.min.css" rel="stylesheet">
+    <title>Swag Walking Bar - 線上訂位預約</title>
+    <script src="https://tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cloudflare.com">
+    <script src="https://gstatic.com"></script>
+    <script src="https://gstatic.com"></script>
     <style>
-        :root {
-            --bg-color: #0b0f19;
-            --card-bg: #161d30;
-            --primary: #f2a154;
-            --primary-hover: #e08e3d;
-            --text-main: #f8fafc;
-            --text-muted: #94a3b8;
-            --border: #2e3b5e;
-        }
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
-        body { background-color: var(--bg-color); color: var(--text-main); line-height: 1.6; padding: 20px 10px; }
-        .container { max-width: 480px; margin: 0 auto; background: var(--card-bg); border-radius: 16px; box-shadow: 0 10px 25px rgba(0,0,0,0.5); overflow: hidden; border: 1px solid var(--border); }
-        .header { padding: 24px; text-align: center; background: linear-gradient(135deg, #1e293b, #0f172a); border-bottom: 1px solid var(--border); }
-        .logo-text { font-size: 24px; font-weight: bold; color: var(--primary); letter-spacing: 1px; margin-bottom: 8px; }
-        .info-box { font-size: 13px; color: var(--text-muted); background: rgba(242, 161, 84, 0.1); padding: 10px; border-radius: 8px; border: 1px solid rgba(242, 161, 84, 0.2); margin-top: 10px; display: inline-block; width: 100%; text-align: left; }
-        .info-box p { margin-bottom: 4px; }
-        .info-box p:last-child { margin-bottom: 0; }
-        .form-section { padding: 20px; border-bottom: 1px solid var(--border); }
-        .section-title { font-size: 15px; font-weight: 600; color: var(--text-main); margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
-        .section-title i { color: var(--primary); }
-        .grid-options { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
-        .grid-4 { grid-template-columns: repeat(4, 1fr); }
-        .btn-opt { background: #1e2942; border: 1px solid var(--border); padding: 12px; border-radius: 10px; color: var(--text-main); cursor: pointer; text-align: center; font-size: 14px; font-weight: 500; transition: all 0.2s ease; }
-        .btn-opt:hover { border-color: var(--primary); }
-        .btn-opt.active { background: var(--primary); color: #000; border-color: var(--primary); font-weight: bold; }
-        .input-group { width: 100%; margin-bottom: 15px; }
-        .input-group label { display: block; font-size: 13px; color: var(--text-muted); margin-bottom: 6px; }
-        .form-control { width: 100%; background: #1e2942; border: 1px solid var(--border); padding: 12px; border-radius: 8px; color: var(--text-main); font-size: 14px; outline: none; }
-        .form-control:focus { border-color: var(--primary); }
-        .hidden { display: none !important; }
-        .btn-submit { display: block; width: 100%; background: var(--primary); color: #000; text-align: center; padding: 14px; border: none; border-radius: 10px; font-size: 16px; font-weight: bold; cursor: pointer; transition: background 0.2s; margin-top: 20px; }
-        .btn-submit:hover { background: var(--primary-hover); }
-        .modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); display: flex; align-items: center; justify-content: center; padding: 20px; z-index: 1000; }
-        .modal-content { background: var(--card-bg); border-radius: 16px; padding: 24px; max-width: 400px; width: 100%; text-align: center; border: 1px solid var(--border); }
-        .success-icon { font-size: 48px; color: #10b981; margin-bottom: 16px; }
-        .btn-modal-close { background: var(--primary); color: #000; border: none; padding: 10px 24px; border-radius: 8px; font-weight: bold; cursor: pointer; margin-top: 20px; }
+        body { background-color: #0d0e12; color: #e2e8f0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+        .glass { background: rgba(22, 25, 35, 0.7); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.05); }
+        .btn-choice { border: 1px solid rgba(255, 255, 255, 0.1); background: rgba(30, 35, 50, 0.6); transition: all 0.2s; }
+        .btn-choice.active { background: #f97316; border-color: #f97316; color: white; box-shadow: 0 0 15px rgba(249, 115, 22, 0.4); }
     </style>
 </head>
-<body>
-    <div class="container">
-        <div class="header">
-            <div class="logo-text">Swag Walking Bar</div>
-            <div class="info-box">
-                <p><i class="fas fa-map-marker-alt"></i> 高雄市鳳山區中山西路46號</p>
-                <p><i class="fas fa-subway"></i> 捷運鳳山站 2 號出口</p>
-                <p><i class="fas fa-exclamation-triangle"></i> 未滿 18 歲請勿飲酒 | 酒後不開車</p>
-            </div>
+<body class="min-h-screen py-6 px-4">
+    <div class="max-w-md mx-auto glass rounded-2xl p-6 shadow-2xl relative overflow-hidden">
+        <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-amber-500 via-orange-500 to-red-500"></div>
+        <div class="text-center mb-6">
+            <h1 class="text-2xl font-bold tracking-wide text-orange-500 mb-1">Swag Walking Bar</h1>
+            <p class="text-xs text-gray-400"><i class="fas fa-map-marker-alt text-red-400 mr-1"></i> 高雄市鳳山區中山西路46號</p>
+            <p class="text-xs text-orange-400 mt-1"><i class="fas fa-subway mr-1"></i> 捷運鳳山站 2 號出口</p>
         </div>
-
-        <form id="bookingForm">
-            <!-- 1. 人數 -->
-            <div class="form-section">
-                <div class="section-title"><i class="fas fa-users"></i> 1. 選擇人數</div>
-                <div class="grid-options" id="guestContainer">
-                    <div class="btn-opt active" data-value="1-2人">1-2 人</div>
-                    <div class="btn-opt" data-value="3-4人">3-4 人</div>
-                    <div class="btn-opt" data-value="5-6人">5-6 人</div>
-                    <div class="btn-opt" data-value="大型聚會(請備註)">6人以上</div>
+        <form id="bookingForm" onsubmit="submitBooking(event)">
+            <div class="mb-5">
+                <label class="block text-sm font-medium text-gray-300 mb-2">1. 選擇人數</label>
+                <select id="guests" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-orange-500">
+                    <option value="1">1 人</option><option value="2" selected>2 人</option><option value="3">3 人</option><option value="4">4 人</option><option value="5">5 人</option><option value="6">6 人</option>
+                </select>
+            </div>
+            <div class="mb-5">
+                <label class="block text-sm font-medium text-gray-300 mb-2">2. 選擇日期</label>
+                <input type="date" id="date" required class="w-full bg-slate-800 border border-slate-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-orange-500">
+            </div>
+            <div class="mb-5">
+                <label class="block text-sm font-medium text-gray-300 mb-2">3. 選擇區域</label>
+                <div class="grid grid-cols-2 gap-3">
+                    <button type="button" onclick="setArea('1樓吧台區')" id="area-bar" class="btn-choice rounded-xl py-3 text-center active"><i class="fas fa-glass-martini-alt mb-1 block text-lg"></i> 1樓吧台區</button>
+                    <button type="button" onclick="setArea('2樓露營區')" id="area-camp" class="btn-choice rounded-xl py-3 text-center"><i class="fas fa-campground mb-1 block text-lg"></i> 2樓露營區</button>
                 </div>
             </div>
-
-            <!-- 2. 日期 -->
-            <div class="form-section">
-                <div class="section-title"><i class="fas fa-calendar-day"></i> 2. 選擇日期</div>
-                <div class="grid-options" id="dateContainer">
-                    <!-- Javascript will fill dynamic dates -->
-                <div class="btn-opt active" data-value="2026-10-29"><span style="display:block; font-size:12px;">今天</span>10/29</div><div class="btn-opt " data-value="2026-10-30"><span style="display:block; font-size:12px;">明天</span>10/30</div><div class="btn-opt " data-value="2026-10-31"><span style="display:block; font-size:12px;">週六</span>10/31</div><div class="btn-opt " data-value="2026-11-01"><span style="display:block; font-size:12px;">週日</span>11/1</div><div class="btn-opt active" data-value="2026-10-29"><span style="display:block; font-size:12px;">今天</span>10/29</div><div class="btn-opt " data-value="2026-10-30"><span style="display:block; font-size:12px;">明天</span>10/30</div><div class="btn-opt " data-value="2026-10-31"><span style="display:block; font-size:12px;">週六</span>10/31</div><div class="btn-opt " data-value="2026-11-01"><span style="display:block; font-size:12px;">週日</span>11/1</div></div>
-            </div>
-
-            <!-- 3. 區域 -->
-            <div class="form-section">
-                <div class="section-title"><i class="fas fa-layer-group"></i> 3. 選擇座位區域</div>
-                <div class="grid-options" id="areaContainer">
-                    <div class="btn-opt active" data-value="1樓吧台區">1樓吧台區</div>
-                    <div class="btn-opt" data-value="2樓露營區">2樓露營區</div>
+            <div class="mb-5">
+                <label class="block text-sm font-medium text-gray-300 mb-2">4. 選擇時間</label>
+                <div class="grid grid-cols-4 gap-2 mb-3">
+                    <button type="button" onclick="setTime('18:00')" class="time-btn btn-choice rounded-lg py-2 text-sm">18:00</button>
+                    <button type="button" onclick="setTime('19:00')" class="time-btn btn-choice rounded-lg py-2 text-sm">19:00</button>
+                    <button type="button" onclick="setTime('20:00')" class="time-btn btn-choice rounded-lg py-2 text-sm">20:00</button>
+                    <button type="button" onclick="setTime('21:00')" class="time-btn btn-choice rounded-lg py-2 text-sm">21:00</button>
                 </div>
+                <button type="button" onclick="toggleCustomTime()" class="text-xs text-orange-400 hover:text-orange-300 transition"><i class="far fa-clock mr-1"></i> 自行填寫其他時間</button>
+                <input type="time" id="customTime" class="hidden w-full bg-slate-800 border border-slate-700 rounded-xl px-4 py-3 mt-2 text-white focus:outline-none focus:border-orange-500">
             </div>
-
-            <!-- 4. 時段 -->
-            <div class="form-section">
-                <div class="section-title"><i class="fas fa-clock"></i> 4. 選擇用餐時段</div>
-                <div class="grid-options grid-4" id="timeContainer">
-                    <div class="btn-opt active" data-value="18:00">18:00</div>
-                    <div class="btn-opt" data-value="19:00">19:00</div>
-                    <div class="btn-opt" data-value="20:00">20:00</div>
-                    <div class="btn-opt" data-value="21:00">21:00</div>
+            <div class="border-t border-slate-800 my-5 pt-4">
+                <div class="mb-4">
+                    <label class="block text-sm font-medium text-gray-300 mb-1">顧客姓名</label>
+                    <input type="text" id="name" required placeholder="請輸入您的姓名" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-orange-500">
                 </div>
-                <div style="margin-top: 12px;">
-                    <div class="btn-opt" id="btnCustomTime" style="font-size: 13px;"><i class="fas fa-edit"></i> 自行填寫其他時間</div>
-                    <div id="customTimeGroup" class="input-group hidden" style="margin-top: 10px;">
-                        <input type="time" id="customTimeInput" class="form-control" placeholder="請輸入時間">
-                    </div>
+                <div class="mb-4">
+                    <label class="block text-sm font-medium text-gray-300 mb-1">電話號碼</label>
+                    <input type="tel" id="phone" required placeholder="請輸入聯絡電話" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-orange-500">
+                </div>
+                <div class="mb-4">
+                    <label class="block text-sm font-medium text-gray-300 mb-1">備註說明 (選填)</label>
+                    <textarea id="notes" placeholder="如有過敏原或特殊需求請註明" rows="2" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-orange-500"></textarea>
                 </div>
             </div>
-
-            <!-- 5. 客戶資料 -->
-            <div class="form-section">
-                <div class="section-title"><i class="fas fa-user-edit"></i> 5. 填寫聯繫資料</div>
-                <div class="input-group">
-                    <label>訂位人姓名 *</label>
-                    <input type="text" id="custName" class="form-control" required="" placeholder="請輸入姓名">
-                </div>
-                <div class="input-group">
-                    <label>手機號碼 *</label>
-                    <input type="tel" id="custPhone" class="form-control" required="" placeholder="請輸入手機號碼">
-                </div>
-                <div class="input-group">
-                    <label>特殊需求備註</label>
-                    <textarea id="custNotes" class="form-control" rows="2" placeholder="過敏原、慶生等特殊需求..."></textarea>
-                </div>
-
-                <button type="submit" class="btn-submit">確認預約訂位</button>
-            </div>
+            <button type="submit" class="w-full bg-gradient-to-r from-orange-500 to-amber-500 text-white rounded-xl py-4 font-bold text-lg hover:from-orange-600 hover:to-amber-600 transition transform active:scale-95 shadow-lg shadow-orange-500/20">確認預約訂位</button>
         </form>
     </div>
-
-    <!-- 成功彈窗 -->
-    <div id="successModal" class="modal hidden">
-        <div class="modal-content">
-            <div class="success-icon"><i class="fas fa-check-circle"></i></div>
-            <h3 style="margin-bottom: 10px;">訂位成功！</h3>
-            <p style="color: var(--text-muted); font-size: 14px; margin-bottom: 8px;" id="modalSummary"></p>
-            <p style="color: var(--primary); font-size: 13px;">期待您的光臨，請準時出席。</p>
-            <button class="btn-modal-close" id="btnCloseModal">好的</button>
-        </div>
-    </div>
-
     <script>
-        // 初始化日期選項
-        const dateContainer = document.getElementById('dateContainer');
-        const days = ['日', '一', '二', '三', '四', '五', '六'];
-        let selectedDate = '';
+        const firebaseConfig = {
+          apiKey: "AIzaSyBDo8F-FeoSnY-DOA3YemmahvPmcVnoxGY",
+          authDomain: "://firebaseapp.com",
+          databaseURL: "https://firebaseio.com",
+          projectId: "swag-walking-bar",
+          storageBucket: "swag-walking-bar.firebasestorage.app",
+          messagingSenderId: "667221676731",
+          appId: "1:667221676731:web:28201b76875fe9c79b8f9e"
+        };
+        firebase.initializeApp(firebaseConfig);
+        const database = firebase.database();
 
-        for (let i = 0; i < 4; i++) {
-            const d = new Date();
-            d.setDate(d.getDate() + i);
-            const dateStr = `${d.getMonth() + 1}/${d.getDate()}`;
-            const fullDateStr = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
-            const dayName = i === 0 ? '今天' : i === 1 ? '明天' : `週${days[d.getDay()]}`;
-            
-            const btn = document.createElement('div');
-            btn.className = `btn-opt ${i === 0 ? 'active' : ''}`;
-            btn.innerHTML = `<span style="display:block; font-size:12px;">${dayName}</span>${dateStr}`;
-            btn.setAttribute('data-value', fullDateStr);
-            if (i === 0) selectedDate = fullDateStr;
+        let selectedArea = '1樓吧台區';
+        let selectedTime = '';
 
-            btn.addEventListener('click', function() {
-                document.querySelectorAll('#dateContainer .btn-opt').forEach(b => b.classList.remove('active'));
-                this.classList.add('active');
-                selectedDate = this.getAttribute('data-value');
-            });
-            dateContainer.appendChild(btn);
+        document.getElementById('date').min = new Date().toISOString().split('T')[0];
+
+        function setArea(area) {
+            selectedArea = area;
+            document.getElementById('area-bar').classList.toggle('active', area === '1樓吧台區');
+            document.getElementById('area-camp').classList.toggle('active', area === '2樓露營區');
         }
 
-        // 通用單選按鈕組處理
-        function setupRadioGroup(containerId, callback) {
-            const container = document.getElementById(containerId);
-            container.querySelectorAll('.btn-opt').forEach(btn => {
-                btn.addEventListener('click', function() {
-                    container.querySelectorAll('.btn-opt').forEach(b => b.classList.remove('active'));
-                    this.classList.add('active');
-                    if (callback) callback(this.getAttribute('data-value'));
-                });
+        function setTime(time) {
+            selectedTime = time;
+            document.getElementById('customTime').classList.add('hidden');
+            document.querySelectorAll('.time-btn').forEach(btn => {
+                btn.classList.toggle('active', btn.innerText === time);
             });
         }
 
-        setupRadioGroup('guestContainer');
-        setupRadioGroup('areaContainer');
-        setupRadioGroup('timeContainer', () => {
-            // 如果點選了預設時段，把自訂時段關閉並清空
-            document.getElementById('customTimeGroup').classList.add('hidden');
-            document.getElementById('btnCustomTime').classList.remove('active');
-            document.getElementById('customTimeInput').value = '';
-        });
+        function toggleCustomTime() {
+            selectedTime = '';
+            document.querySelectorAll('.time-btn').forEach(btn => btn.classList.remove('active'));
+            const customInput = document.getElementById('customTime');
+            customInput.classList.remove('hidden');
+            customInput.focus();
+        }
 
-        // 自訂時間點擊
-        const btnCustomTime = document.getElementById('btnCustomTime');
-        const customTimeGroup = document.getElementById('customTimeGroup');
-        const customTimeInput = document.getElementById('customTimeInput');
-
-        btnCustomTime.addEventListener('click', function() {
-            document.querySelectorAll('#timeContainer .btn-opt').forEach(b => b.classList.remove('active'));
-            this.classList.add('active');
-            customTimeGroup.classList.remove('hidden');
-            customTimeInput.focus();
-        });
-
-        customTimeInput.addEventListener('input', function() {
-            if(this.value) {
-                btnCustomTime.setAttribute('data-value', this.value);
-            }
-        });
-
-        // 提交表單
-        document.getElementById('bookingForm').addEventListener('submit', function(e) {
+        function submitBooking(e) {
             e.preventDefault();
-            
-            const guests = document.querySelector('#guestContainer .btn-opt.active').getAttribute('data-value');
-            const area = document.querySelector('#areaContainer .btn-opt.active').getAttribute('data-value');
-            
-            let time = '';
-            const activeTimeBtn = document.querySelector('#timeContainer .btn-opt.active');
-            if (activeTimeBtn) {
-                time = activeTimeBtn.getAttribute('data-value');
-            } else if (btnCustomTime.classList.contains('active')) {
-                time = customTimeInput.value || '未填寫';
-            }
+            const finalTime = selectedTime || document.getElementById('customTime').value;
+            if(!finalTime) { alert('請選擇或填寫訂位時間！'); return; }
 
-            const name = document.getElementById('custName').value;
-            const phone = document.getElementById('custPhone').value;
-            const notes = document.getElementById('custNotes').value;
-
-            const newBooking = {
-                id: 'SW' + Date.now().toString().slice(-4),
-                name: name,
-                phone: phone,
-                date: selectedDate,
-                time: time,
-                guests: guests,
-                area: area,
-                notes: notes,
-                status: '已確認',
-                createdAt: new Date().toLocaleTimeString()
+            const bookingData = {
+                guests: document.getElementById('guests').value,
+                date: document.getElementById('date').value,
+                area: selectedArea,
+                time: finalTime,
+                name: document.getElementById('name').value,
+                phone: document.getElementById('phone').value,
+                notes: document.getElementById('notes').value,
+                createdAt: new Date().toISOString()
             };
 
-            // 儲存至 localStorage 供跨網頁共享測試
-            let currentBookings = JSON.parse(localStorage.getItem('swag_bookings')) || [];
-            currentBookings.push(newBooking);
-            localStorage.setItem('swag_bookings', JSON.stringify(currentBookings));
-
-            // 顯示成功彈窗
-            document.getElementById('modalSummary').innerText = `${selectedDate} ${time} | ${area} | ${guests}`;
-            document.getElementById('successModal').classList.remove('hidden');
-        });
-
-        // 關閉彈窗重置
-        document.getElementById('btnCloseModal').addEventListener('click', function() {
-            document.getElementById('successModal').classList.add('hidden');
-            document.getElementById('bookingForm').reset();
-            // 重置自訂按鈕
-            customTimeGroup.classList.add('hidden');
-            btnCustomTime.classList.remove('active');
-            // 回到預設第一個日期跟時段
-            document.querySelectorAll('#dateContainer .btn-opt').forEach((b, idx) => {
-                if(idx===0) b.classList.add('active'); else b.classList.remove('active');
-            });
-            document.querySelectorAll('#timeContainer .btn-opt').forEach((b, idx) => {
-                if(idx===0) b.classList.add('active'); else b.classList.remove('active');
-            });
-        });
+            database.ref('bookings').push(bookingData)
+                .then(() => {
+                    alert('🎉 預約成功！期待您的光臨！');
+                    document.getElementById('bookingForm').reset();
+                    setTime('');
+                })
+                .catch((error) => { alert('系統忙碌中：' + error.message); });
+        }
     </script>
-
-
-</body></html>
+</body>
+</html>
