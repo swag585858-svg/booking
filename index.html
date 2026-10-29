@@ -5,69 +5,88 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Swag Walking Bar - 線上訂位預約</title>
-    <script src="https://tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cloudflare.com">
-    <script src="https://gstatic.com"></script>
-    <script src="https://gstatic.com"></script>
     <style>
-        body { background-color: #0d0e12; color: #e2e8f0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
-        .glass { background: rgba(22, 25, 35, 0.7); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.05); }
-        .btn-choice { border: 1px solid rgba(255, 255, 255, 0.1); background: rgba(30, 35, 50, 0.6); transition: all 0.2s; }
-        .btn-choice.active { background: #f97316; border-color: #f97316; color: white; box-shadow: 0 0 15px rgba(249, 115, 22, 0.4); }
+        body { background-color: #0d0e12; color: #e2e8f0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; margin: 0; padding: 24px 16px; display: flex; justify-content: center; }
+        .container { max-width: 400px; width: 100%; background: #161923; border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 16px; padding: 24px; box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5); box-sizing: border-box; position: relative; }
+        .top-bar { position: absolute; top: 0; left: 0; width: 100%; height: 4px; background: linear-gradient(90deg, #f59e0b, #f97316, #ef4444); }
+        .header { text-align: center; margin-bottom: 24px; }
+        .header h1 { color: #f97316; font-size: 24px; margin: 0 0 6px 0; font-weight: bold; }
+        .header p { color: #94a3b8; font-size: 13px; margin: 4px 0; }
+        .header .subway { color: #fbbf24; font-weight: 500; }
+        .form-group { margin-bottom: 20px; }
+        .form-group label { display: block; font-size: 14px; color: #cbd5e1; margin-bottom: 8px; font-weight: 500; }
+        .input-control { width: 100%; background-color: #1e293b; border: 1px solid #334155; border-radius: 10px; padding: 12px; color: #ffffff; font-size: 15px; box-sizing: border-box; outline: none; }
+        .input-control:focus { border-color: #f97316; }
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+        .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-bottom: 10px; }
+        .btn-choice { border: 1px solid rgba(255, 255, 255, 0.1); background: rgba(30, 35, 50, 0.6); color: #e2e8f0; padding: 12px 8px; border-radius: 10px; cursor: pointer; font-size: 14px; text-align: center; }
+        .btn-choice.active { background: #f97316; border-color: #f97316; color: #ffffff; font-weight: bold; box-shadow: 0 0 12px rgba(249, 115, 22, 0.4); }
+        .link-btn { background: none; border: none; color: #f97316; font-size: 12px; cursor: pointer; padding: 0; }
+        .hidden { display: none; }
+        .mt-2 { margin-top: 8px; }
+        .divider { border-top: 1px solid #1e293b; margin: 20px 0; padding-top: 16px; }
+        .btn-submit { width: 100%; background: linear-gradient(90deg, #f97316, #f59e0b); color: white; border: none; border-radius: 12px; padding: 14px; font-size: 16px; font-weight: bold; cursor: pointer; box-shadow: 0 4px 12px rgba(249, 115, 22, 0.2); }
     </style>
+    <script src="https://gstatic.com"></script>
+    <script src="https://gstatic.com"></script>
 </head>
-<body class="min-h-screen py-6 px-4">
-    <div class="max-w-md mx-auto glass rounded-2xl p-6 shadow-2xl relative overflow-hidden">
-        <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-amber-500 via-orange-500 to-red-500"></div>
-        <div class="text-center mb-6">
-            <h1 class="text-2xl font-bold tracking-wide text-orange-500 mb-1">Swag Walking Bar</h1>
-            <p class="text-xs text-gray-400"><i class="fas fa-map-marker-alt text-red-400 mr-1"></i> 高雄市鳳山區中山西路46號</p>
-            <p class="text-xs text-orange-400 mt-1"><i class="fas fa-subway mr-1"></i> 捷運鳳山站 2 號出口</p>
+<body>
+    <div class="container">
+        <div class="top-bar"></div>
+        <div class="header">
+            <h1>Swag Walking Bar</h1>
+            <p>高雄市鳳山區中山西路46號</p>
+            <p class="subway">捷運鳳山站 2 號出口</p>
         </div>
         <form id="bookingForm" onsubmit="submitBooking(event)">
-            <div class="mb-5">
-                <label class="block text-sm font-medium text-gray-300 mb-2">1. 選擇人數</label>
-                <select id="guests" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-orange-500">
-                    <option value="1">1 人</option><option value="2" selected>2 人</option><option value="3">3 人</option><option value="4">4 人</option><option value="5">5 人</option><option value="6">6 人</option>
+            <div class="form-group">
+                <label>1. 選擇人數</label>
+                <select id="guests" class="input-control">
+                    <option value="1">1 人</option>
+                    <option value="2" selected>2 人</option>
+                    <option value="3">3 人</option>
+                    <option value="4">4 人</option>
+                    <option value="5">5 人</option>
+                    <option value="6">6 人</option>
                 </select>
             </div>
-            <div class="mb-5">
-                <label class="block text-sm font-medium text-gray-300 mb-2">2. 選擇日期</label>
-                <input type="date" id="date" required class="w-full bg-slate-800 border border-slate-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-orange-500">
+            <div class="form-group">
+                <label>2. 選擇日期</label>
+                <input type="date" id="date" required class="input-control">
             </div>
-            <div class="mb-5">
-                <label class="block text-sm font-medium text-gray-300 mb-2">3. 選擇區域</label>
-                <div class="grid grid-cols-2 gap-3">
-                    <button type="button" onclick="setArea('1樓吧台區')" id="area-bar" class="btn-choice rounded-xl py-3 text-center active"><i class="fas fa-glass-martini-alt mb-1 block text-lg"></i> 1樓吧台區</button>
-                    <button type="button" onclick="setArea('2樓露營區')" id="area-camp" class="btn-choice rounded-xl py-3 text-center"><i class="fas fa-campground mb-1 block text-lg"></i> 2樓露營區</button>
-                </div>
-            </div>
-            <div class="mb-5">
-                <label class="block text-sm font-medium text-gray-300 mb-2">4. 選擇時間</label>
-                <div class="grid grid-cols-4 gap-2 mb-3">
-                    <button type="button" onclick="setTime('18:00')" class="time-btn btn-choice rounded-lg py-2 text-sm">18:00</button>
-                    <button type="button" onclick="setTime('19:00')" class="time-btn btn-choice rounded-lg py-2 text-sm">19:00</button>
-                    <button type="button" onclick="setTime('20:00')" class="time-btn btn-choice rounded-lg py-2 text-sm">20:00</button>
-                    <button type="button" onclick="setTime('21:00')" class="time-btn btn-choice rounded-lg py-2 text-sm">21:00</button>
-                </div>
-                <button type="button" onclick="toggleCustomTime()" class="text-xs text-orange-400 hover:text-orange-300 transition"><i class="far fa-clock mr-1"></i> 自行填寫其他時間</button>
-                <input type="time" id="customTime" class="hidden w-full bg-slate-800 border border-slate-700 rounded-xl px-4 py-3 mt-2 text-white focus:outline-none focus:border-orange-500">
-            </div>
-            <div class="border-t border-slate-800 my-5 pt-4">
-                <div class="mb-4">
-                    <label class="block text-sm font-medium text-gray-300 mb-1">顧客姓名</label>
-                    <input type="text" id="name" required placeholder="請輸入您的姓名" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-orange-500">
-                </div>
-                <div class="mb-4">
-                    <label class="block text-sm font-medium text-gray-300 mb-1">電話號碼</label>
-                    <input type="tel" id="phone" required placeholder="請輸入聯絡電話" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-orange-500">
-                </div>
-                <div class="mb-4">
-                    <label class="block text-sm font-medium text-gray-300 mb-1">備註說明 (選填)</label>
-                    <textarea id="notes" placeholder="如有過敏原或特殊需求請註明" rows="2" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-orange-500"></textarea>
+            <div class="form-group">
+                <label>3. 選擇區域</label>
+                <div class="grid-2">
+                    <button type="button" onclick="setArea('1樓吧台區')" id="area-bar" class="btn-choice active">1樓吧台區</button>
+                    <button type="button" onclick="setArea('2樓露營區')" id="area-camp" class="btn-choice">2樓露營區</button>
                 </div>
             </div>
-            <button type="submit" class="w-full bg-gradient-to-r from-orange-500 to-amber-500 text-white rounded-xl py-4 font-bold text-lg hover:from-orange-600 hover:to-amber-600 transition transform active:scale-95 shadow-lg shadow-orange-500/20">確認預約訂位</button>
+            <div class="form-group">
+                <label>4. 選擇時間</label>
+                <div class="grid-4">
+                    <button type="button" onclick="setTime('18:00')" class="time-btn btn-choice">18:00</button>
+                    <button type="button" onclick="setTime('19:00')" class="time-btn btn-choice">19:00</button>
+                    <button type="button" onclick="setTime('20:00')" class="time-btn btn-choice">20:00</button>
+                    <button type="button" onclick="setTime('21:00')" class="time-btn btn-choice">21:00</button>
+                </div>
+                <button type="button" onclick="toggleCustomTime()" class="link-btn">自行填寫其他時間</button>
+                <input type="time" id="customTime" class="input-control hidden mt-2">
+            </div>
+            <div class="divider">
+                <div class="form-group">
+                    <label>顧客姓名</label>
+                    <input type="text" id="name" required placeholder="請輸入您的姓名" class="input-control">
+                </div>
+                <div class="form-group">
+                    <label>電話號碼</label>
+                    <input type="tel" id="phone" required placeholder="請輸入聯絡電話" class="input-control">
+                </div>
+                <div class="form-group">
+                    <label>備註說明 (選填)</label>
+                    <textarea id="notes" placeholder="如有需求請註明" rows="2" class="input-control"></textarea>
+                </div>
+            </div>
+            <button type="submit" class="btn-submit">確認預約訂位</button>
         </form>
     </div>
     <script>
@@ -82,18 +101,14 @@
         };
         firebase.initializeApp(firebaseConfig);
         const database = firebase.database();
-
         let selectedArea = '1樓吧台區';
         let selectedTime = '';
-
-        document.getElementById('date').min = new Date().toISOString().split('T')[0];
-
+        document.getElementById('date').min = new Date().toISOString().split('T');
         function setArea(area) {
             selectedArea = area;
             document.getElementById('area-bar').classList.toggle('active', area === '1樓吧台區');
             document.getElementById('area-camp').classList.toggle('active', area === '2樓露營區');
         }
-
         function setTime(time) {
             selectedTime = time;
             document.getElementById('customTime').classList.add('hidden');
@@ -101,7 +116,6 @@
                 btn.classList.toggle('active', btn.innerText === time);
             });
         }
-
         function toggleCustomTime() {
             selectedTime = '';
             document.querySelectorAll('.time-btn').forEach(btn => btn.classList.remove('active'));
@@ -109,12 +123,10 @@
             customInput.classList.remove('hidden');
             customInput.focus();
         }
-
         function submitBooking(e) {
             e.preventDefault();
             const finalTime = selectedTime || document.getElementById('customTime').value;
             if(!finalTime) { alert('請選擇或填寫訂位時間！'); return; }
-
             const bookingData = {
                 guests: document.getElementById('guests').value,
                 date: document.getElementById('date').value,
@@ -125,14 +137,13 @@
                 notes: document.getElementById('notes').value,
                 createdAt: new Date().toISOString()
             };
-
             database.ref('bookings').push(bookingData)
                 .then(() => {
-                    alert('🎉 預約成功！期待您的光臨！');
+                    alert('預約成功！期待您的光臨！');
                     document.getElementById('bookingForm').reset();
                     setTime('');
                 })
-                .catch((error) => { alert('系統忙碌中：' + error.message); });
+                .catch((error) => { alert('連線失敗：' + error.message); });
         }
     </script>
 </body>
