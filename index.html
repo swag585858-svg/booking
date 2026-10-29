@@ -18,7 +18,7 @@
         .input-control:focus { border-color: #f97316; }
         .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
         .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-bottom: 10px; }
-        .btn-choice { border: 1px solid rgba(255, 255, 255, 0.1); background: rgba(30, 35, 50, 0.6); color: #e2e8f0; padding: 12px 8px; border-radius: 10px; cursor: pointer; font-size: 14px; text-align: center; }
+        .btn-choice { border: 1px solid rgba(255, 255, 255, 0.1); background: rgba(30, 35, 50, 0.6); color: #e2e8f0; padding: 12px 8px; border-radius: 10px; cursor: pointer; font-size: 14px; text-align: center; box-sizing: border-box; }
         .btn-choice.active { background: #f97316; border-color: #f97316; color: #ffffff; font-weight: bold; box-shadow: 0 0 12px rgba(249, 115, 22, 0.4); }
         .link-btn { background: none; border: none; color: #f97316; font-size: 12px; cursor: pointer; padding: 0; }
         .hidden { display: none; }
@@ -37,7 +37,7 @@
             <p>高雄市鳳山區中山西路46號</p>
             <p class="subway">捷運鳳山站 2 號出口</p>
         </div>
-        <form id="bookingForm" onsubmit="submitBooking(event)">
+        <form id="bookingForm">
             <div class="form-group">
                 <label>1. 選擇人數</label>
                 <select id="guests" class="input-control">
@@ -56,19 +56,19 @@
             <div class="form-group">
                 <label>3. 選擇區域</label>
                 <div class="grid-2">
-                    <button type="button" onclick="setArea('1樓吧台區')" id="area-bar" class="btn-choice active">1樓吧台區</button>
-                    <button type="button" onclick="setArea('2樓露營區')" id="area-camp" class="btn-choice">2樓露營區</button>
+                    <button type="button" id="area-bar" class="btn-choice active">1樓吧台區</button>
+                    <button type="button" id="area-camp" class="btn-choice">2樓露營區</button>
                 </div>
             </div>
             <div class="form-group">
                 <label>4. 選擇時間</label>
                 <div class="grid-4">
-                    <button type="button" onclick="setTime('18:00')" class="time-btn btn-choice">18:00</button>
-                    <button type="button" onclick="setTime('19:00')" class="time-btn btn-choice">19:00</button>
-                    <button type="button" onclick="setTime('20:00')" class="time-btn btn-choice">20:00</button>
-                    <button type="button" onclick="setTime('21:00')" class="time-btn btn-choice">21:00</button>
+                    <button type="button" class="time-btn btn-choice">18:00</button>
+                    <button type="button" class="time-btn btn-choice">19:00</button>
+                    <button type="button" class="time-btn btn-choice">20:00</button>
+                    <button type="button" class="time-btn btn-choice">21:00</button>
                 </div>
-                <button type="button" onclick="toggleCustomTime()" class="link-btn">自行填寫其他時間</button>
+                <button type="button" id="btnCustom" class="link-btn">自行填寫其他時間</button>
                 <input type="time" id="customTime" class="input-control hidden mt-2">
             </div>
             <div class="divider">
@@ -100,32 +100,50 @@
         };
         firebase.initializeApp(firebaseConfig);
         const database = firebase.database();
+
         let selectedArea = '1樓吧台區';
         let selectedTime = '';
-        document.getElementById('date').min = new Date().toISOString().split('T');
-        function setArea(area) {
-            selectedArea = area;
-            document.getElementById('area-bar').classList.toggle('active', area === '1樓吧台區');
-            document.getElementById('area-camp').classList.toggle('active', area === '2樓露營區');
-        }
-        function setTime(time) {
-            selectedTime = time;
-            document.getElementById('customTime').classList.add('hidden');
-            document.querySelectorAll('.time-btn').forEach(btn => {
-                btn.classList.toggle('active', btn.innerText === time);
+
+        document.getElementById('date').min = new Date().toISOString().split('T')[0];
+
+        // 綁定區域按鈕事件
+        document.getElementById('area-bar').addEventListener('click', function() {
+            selectedArea = '1樓吧台區';
+            this.classList.add('active');
+            document.getElementById('area-camp').classList.remove('active');
+        });
+        document.getElementById('area-camp').addEventListener('click', function() {
+            selectedArea = '2樓露營區';
+            this.classList.add('active');
+            document.getElementById('area-bar').classList.remove('active');
+        });
+
+        // 綁定預設時間按鈕事件
+        const timeBtns = document.querySelectorAll('.time-btn');
+        timeBtns.forEach(function(btn) {
+            btn.addEventListener('click', function() {
+                document.getElementById('customTime').classList.add('hidden');
+                timeBtns.forEach(function(b) { b.classList.remove('active'); });
+                this.classList.add('active');
+                selectedTime = this.innerText;
             });
-        }
-        function toggleCustomTime() {
+        });
+
+        // 綁定自訂時間切換
+        document.getElementById('btnCustom').addEventListener('click', function() {
             selectedTime = '';
-            document.querySelectorAll('.time-btn').forEach(btn => btn.classList.remove('active'));
+            timeBtns.forEach(function(b) { b.classList.remove('active'); });
             const customInput = document.getElementById('customTime');
             customInput.classList.remove('hidden');
             customInput.focus();
-        }
-        function submitBooking(e) {
+        });
+
+        // 提交預約表單
+        document.getElementById('bookingForm').addEventListener('submit', function(e) {
             e.preventDefault();
             const finalTime = selectedTime || document.getElementById('customTime').value;
             if(!finalTime) { alert('請選擇或填寫訂位時間！'); return; }
+
             const bookingData = {
                 guests: document.getElementById('guests').value,
                 date: document.getElementById('date').value,
@@ -136,16 +154,20 @@
                 notes: document.getElementById('notes').value,
                 createdAt: new Date().toISOString()
             };
+
             database.ref('bookings').push(bookingData)
-                .then(() => {
-                    alert('預約成功！期待您的光臨！');
+                .then(function() {
+                    alert('🎉 預約成功！期待您的光臨！');
                     document.getElementById('bookingForm').reset();
-                    setTime('');
+                    timeBtns.forEach(function(b) { b.classList.remove('active'); });
+                    selectedTime = '';
+                    selectedArea = '1樓吧台區';
+                    document.getElementById('area-bar').classList.add('active');
+                    document.getElementById('area-camp').classList.remove('active');
                 })
-                .catch((error) => { alert('連線失敗：' + error.message); });
-        }
+                .catch(function(error) { alert('連線失敗：' + error.message); });
+        });
     </script>
 </body>
-
-</body>
 </html>
+
